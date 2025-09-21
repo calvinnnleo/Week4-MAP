@@ -10,8 +10,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class CafeFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    companion object {
+        private val TAB_TITLES_RESOURCES = arrayOf(
+            R.string.starbucks_title,
+            R.string.janjijiwa_title,
+            R.string.kopikenangan_title
+        )
     }
 
     override fun onCreateView(
@@ -23,13 +28,15 @@ class CafeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val viewPager = view.findViewById<ViewPager2>(R.id.view_pager)
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
-        val adapter = CafeAdapter(childFragmentManager, lifecycle)
 
-        viewPager.adapter = adapter
+        val cafeAdapter = CafeAdapter(this)
+        viewPager.adapter = cafeAdapter
+
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = resources.getString(TABS_FIXED[position])
+            tab.text = getString(TAB_TITLES_RESOURCES[position])
         }.attach()
     }
 }
